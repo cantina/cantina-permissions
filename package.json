@@ -1,0 +1,30 @@
+{
+  "name": "cantina-permissions",
+  "private": true,
+  "version": "0.0.0",
+  "description": "Permissions system for Cantina apps",
+  "main": "cantina-app-users.js",
+  "scripts": {
+    "test": "node_modules/.bin/mocha"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/cantina/cantina-permissions.git"
+  },
+  "author": "Erin LeSavoy <erin@terraeclipse.com>",
+  "license": "none",
+  "bugs": {
+    "url": "https://github.com/cantina/cantina-permissions/issues"
+  },
+  "homepage": "https://github.com/cantina/cantina-permissions",
+  "dependencies": {
+    "relations": "~0.4.3",
+    "async": "~0.2.10",
+    "underscore": "~1.6.0"
+  },
+  "devDependencies": {
+    "mocha": "^1.18.2",
+    "cantina": "cantina/cantina#3.x",
+    "cantina-redis": "cantina/cantina-redis#3.x"
+  }
+}
