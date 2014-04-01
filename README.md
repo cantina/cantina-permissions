@@ -8,8 +8,8 @@ for permissions stored in redis.
 Table of Contents
 -----------------
 
-- [Example](#example)
 - [Usage](#usage)
+- [Example](#example)
 - [API Reference](#api-reference)
     - [`app.permissions`](#apppermissions)
       - [`app.permissions.define(context, roles)`](#apppermissionsdefinecontext-roles)
@@ -25,15 +25,71 @@ Table of Contents
       - [`app.permissions[context].whatCan(user, verb, cb)`](#apppermissionscontextwhatcanuser-verb-cb)
       - [`app.permissions[context].whatActions(user, object, cb)`](#apppermissionscontextwhatactionsuser-object-cb)
 
-Example
--------
-[Quick copy-paste-type example of what this looks like in action]
-
 
 Usage
 -----
+Include the `cantina-permissions` plugin in your `cantina` application and
+define your relations contexts. You'll then have the API for granting,
+revoking, and querying for your application's permissions.
 
-[Describe in more detail how to use the plugin]
+```js
+var app = require('cantina');
+
+app.boot(function (err) {
+  // Handle err.
+  if (err) throw err;
+
+  // Load cantina-permissions.
+  require('cantina-permissions');
+
+  // Start the app.
+  app.start();
+});
+```
+
+```js
+var app = require('cantina');
+var permissionDefinitions = {
+  event: {
+    author: ['read', 'edit', 'delete'],
+    viewer: ['read'],
+    collaborator: ['read', 'edit']
+  },
+  site: {
+    admin: ['administrate']
+  }
+};
+
+Object.keys(permissionDefinitions).forEach(function (ctx) {
+  app.permissions.define(ctx, permissionDefinitions[ctx]);
+});
+```
+
+
+Example
+-------
+```js
+var app = require('cantina')
+  , controller = module.exports = app.controller();
+
+controller.get('/event/:id', function (req, res, next) {
+
+  app.permissions.event.can('read', {user: req.user, object: req.params.id},
+  function (err, hasAccess) {
+    if (err) return next(err);
+    if (hasAccess) {
+      app.collections.event.load(req.params.id, function (err, event) {
+        if (err) return next(err);
+        res.vars.event = event;
+        res.render('event', res.vars);
+      });
+    }
+    else {
+      res.renderStatus(403);
+    }
+  })
+});
+```
 
 
 API Reference
