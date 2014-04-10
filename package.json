@@ -3,7 +3,7 @@
   "private": true,
   "version": "0.0.0",
   "description": "Permissions system for Cantina apps",
-  "main": "cantina-app-users.js",
+  "main": "cantina-permissions.js",
   "scripts": {
     "test": "node_modules/.bin/mocha"
   },
