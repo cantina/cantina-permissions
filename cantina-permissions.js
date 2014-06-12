@@ -147,6 +147,6 @@ app.permissions = {
         object = object.id ? object.id : object;
         relations[ctx]('What actions can :user do with :object', {user: user, object: object}, cb);
       }
-    }
+    };
   }
 };

@@ -7,7 +7,7 @@ describe('permissions', function (){
       assert.ifError(err);
 
       app.silence();
-      require('../cantina-permissions');
+      require('../');
 
       app.start(done);
     });
@@ -38,7 +38,7 @@ describe('permissions', function (){
     app.permissions['document'].grant('admin', 'erin', function (err) {
       assert.ifError(err);
       done();
-    })
+    });
   });
 
   it('runs hooks on permission:grant', function (done) {
@@ -157,5 +157,5 @@ describe('permissions', function (){
       assert(actions.indexOf('edit') >= 0);
       done();
     });
-  })
+  });
 });

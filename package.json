@@ -1,8 +1,10 @@
 {
   "name": "cantina-permissions",
-  "private": true,
-  "version": "0.0.0",
   "description": "Permissions system for Cantina apps",
+  "version": "0.0.0",
+  "publishConfig": {
+    "registry": "https://npm-registry.terraeclipse.com"
+  },
   "main": "cantina-permissions.js",
   "scripts": {
     "test": "node_modules/.bin/mocha"
@@ -22,9 +24,13 @@
     "async": "~0.2.10",
     "underscore": "~1.6.0"
   },
+  "peerDependencies": {
+    "cantina": "~4.0.0",
+    "cantina-redis": "~4.0.0"
+  },
   "devDependencies": {
     "mocha": "^1.18.2",
-    "cantina": "cantina/cantina#3.x",
-    "cantina-redis": "cantina/cantina-redis#3.x"
+    "cantina": "~4.0.0",
+    "cantina-redis": "~4.0.0"
   }
 }
