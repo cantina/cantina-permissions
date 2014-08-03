@@ -1,7 +1,7 @@
 {
   "name": "cantina-permissions",
   "description": "Permissions system for Cantina apps",
-  "version": "4.1.0",
+  "version": "4.1.1",
   "main": "cantina-permissions.js",
   "scripts": {
     "test": "node_modules/.bin/mocha"
