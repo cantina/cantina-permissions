@@ -33,14 +33,14 @@ define your relations contexts. You'll then have the API for granting,
 revoking, and querying for your application's permissions.
 
 ```js
-var app = require('cantina');
+var app = require('cantina').createApp();
 
 app.boot(function (err) {
   // Handle err.
   if (err) throw err;
 
   // Load cantina-permissions.
-  require('cantina-permissions');
+  app.require('cantina-permissions');
 
   // Start the app.
   app.start();
@@ -48,47 +48,50 @@ app.boot(function (err) {
 ```
 
 ```js
-var app = require('cantina');
-var permissionDefinitions = {
-  event: {
-    author: ['read', 'edit', 'delete'],
-    viewer: ['read'],
-    collaborator: ['read', 'edit']
-  },
-  site: {
-    admin: ['administrate']
-  }
-};
+module.exports = function (app) {
+  var permissionDefinitions = {
+    event: {
+      author: ['read', 'edit', 'delete'],
+      viewer: ['read'],
+      collaborator: ['read', 'edit']
+    },
+    site: {
+      admin: ['administrate']
+    }
+  };
 
-Object.keys(permissionDefinitions).forEach(function (ctx) {
-  app.permissions.define(ctx, permissionDefinitions[ctx]);
-});
+  Object.keys(permissionDefinitions).forEach(function (ctx) {
+    app.permissions.define(ctx, permissionDefinitions[ctx]);
+  });
+};
 ```
 
 
 Example
 -------
 ```js
-var app = require('cantina')
-  , controller = module.exports = app.controller();
+module.exports = function (app) {
+  var controller = app.controller();
 
-controller.get('/event/:id', function (req, res, next) {
+  controller.get('/event/:id', function (req, res, next) {
+    app.permissions.event.can('read', {user: req.user, object: req.params.id},
+    function (err, hasAccess) {
+      if (err) return next(err);
+      if (hasAccess) {
+        app.collections.event.load(req.params.id, function (err, event) {
+          if (err) return next(err);
+          res.vars.event = event;
+          res.render('event', res.vars);
+        });
+      }
+      else {
+        res.renderStatus(403);
+      }
+    });
+  });
 
-  app.permissions.event.can('read', {user: req.user, object: req.params.id},
-  function (err, hasAccess) {
-    if (err) return next(err);
-    if (hasAccess) {
-      app.collections.event.load(req.params.id, function (err, event) {
-        if (err) return next(err);
-        res.vars.event = event;
-        res.render('event', res.vars);
-      });
-    }
-    else {
-      res.renderStatus(403);
-    }
-  })
-});
+  return controller;
+};
 ```
 
 

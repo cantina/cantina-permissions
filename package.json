@@ -2,9 +2,6 @@
   "name": "cantina-permissions",
   "description": "Permissions system for Cantina apps",
   "version": "4.1.0",
-  "publishConfig": {
-    "registry": "https://npm-registry.terraeclipse.com"
-  },
   "main": "cantina-permissions.js",
   "scripts": {
     "test": "node_modules/.bin/mocha"
@@ -13,8 +10,13 @@
     "type": "git",
     "url": "git://github.com/cantina/cantina-permissions.git"
   },
+  "licenses": [
+    {
+      "type": "Apache-2.0",
+      "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
+    }
+  ],
   "author": "Erin LeSavoy <erin@terraeclipse.com>",
-  "license": "none",
   "bugs": {
     "url": "https://github.com/cantina/cantina-permissions/issues"
   },
